@@ -1,0 +1,16 @@
+numpy>=1.18.0
+gluoncv>=0.10.0
+motmetrics>=1.2.0
+timm>=0.3.0
+tqdm>=4.0.0
+imgaug>=0.4.0
+# torchvision>=0.5.0,<=0.8.2
+# torch>=1.4.0,<=1.7.1
+yacs>=0.1.7
+Pillow>=6.0.0
+pycocotools>=2.0.0
+scikit_learn>=0.21.0
+indexed>=1.0.0
+fire>=0.2.0
+mxnet>=1.6.0
+tensorboard>=2.0.0

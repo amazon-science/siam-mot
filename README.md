@@ -18,7 +18,7 @@ SiamMOT is a region-based Siamese Multi-Object Tracking network that detects and
     
 ![](readme/ablation.gif)
     
-##Abstract
+## Abstract
 In this paper, we focus on improving online multi-object tracking (MOT). In particular, we introduce a region-based Siamese Multi-Object Tracking network, which we name SiamMOT. SiamMOT includes a motion model that estimates the instance’s movement between two frames such that detected instances are associated. To explore how the motion modelling affects its tracking capability, we present two variants of Siamese tracker, one that implicitly models motion and one that models it explicitly. We carry out extensive quantitative experiments on three different MOT datasets: MOT17, TAO-person and Caltech Roadside Pedestrians, showing the importance of motion modelling for MOT and the ability of SiamMOT to substantially outperform the state-of-the-art. Finally, SiamMOT also outperforms the winners of ACM MM’20 HiEve Grand Challenge on HiEve dataset. Moreover, SiamMOT is efficient, and it runs at 17 FPS for 720P videos on a single modern GPU.
 
 
@@ -28,9 +28,9 @@ Please refer to [INSTALL.md](readme/INSTALL.md) for installation instructions.
 
 
 ## Try SiamMOT demo
-Codes and instructions are coming soon....
-
 We provide several pre-trained models in [model_zoos.md](readme/model_zoo.md) that can be used for demo. 
+
+Codes and instructions are coming soon....
 
 ![](readme/demo_volleyball.gif)
 
@@ -40,15 +40,21 @@ We provide several pre-trained models in [model_zoos.md](readme/model_zoo.md) th
 After [installation](readme/INSTALL.md), follow the instructions in [DATA.md](readme/DATA.md) to setup the datasets.
 As a sanity check, the models presented in [model_zoos.md](readme/model_zoo.md) can be used to for benchmark testing. 
 
-Use the following command to train a model on a 8-GPU machine:
+Use the following command to train a model on an 8-GPU machine:
+Before running training / inference, setup the [configuration file](configs) properly
 ~~~
-python3 -m torch.distributed.launch --nproc_per_node=8 tools/train_net.py --config-file configs/dla/DLA_34_FPN.yaml --train-dir PTAH_TO_TRAIN_DIR --model-suffix MODEL_SUFFIX 
+python3 -m torch.distributed.launch --nproc_per_node=8 tools/train_net.py --config-file configs/dla/DLA_34_FPN.yaml --train-dir PATH_TO_TRAIN_DIR --model-suffix MODEL_SUFFIX 
 ~~~
 
 Use the following command to test a model on a single-GPU machine:
 ~~~
-python3 tools/test_net.py --config-file configs/dla/DLA_34_FPN.yaml --output-dir PATH_TO_OUTPUT_DIR --model-file PATH_TO_MODEL_FILE --test-dataset DATASET_KEY —set val
+python3 tools/test_net.py --config-file configs/dla/DLA_34_FPN.yaml --output-dir PATH_TO_OUTPUT_DIR --model-file PATH_TO_MODEL_FILE --test-dataset DATASET_KEY --set val
 ~~~
+
+**Note:** If you get an error `ModuleNotFoundError: No module named 'siammot'` when running in the git root then make
+sure your PYTHONPATH includes the current directory, which you can add by running: `export PYTHONPATH=.:$PYTHONPATH`
+or you can explicitly add the project to the path by replacing the '.' in the export command with the absolute path to
+the git root.
 
 Multi-gpu testing is going to be supported later.
 

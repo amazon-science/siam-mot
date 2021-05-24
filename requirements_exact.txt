@@ -1,0 +1,16 @@
+numpy==1.20.1
+gluoncv==0.10.0
+motmetrics==1.2.0
+timm==0.4.5
+tqdm==4.59.0
+imgaug==0.4.0
+# torchvision==0.8.2
+# torch==1.7.1
+yacs==0.1.8
+Pillow==8.2.0
+pycocotools==2.0.2
+scikit_learn==0.24.2
+indexed==1.2.0
+fire==0.4.0
+mxnet==1.8.0.post0
+tensorboard==2.5.0
