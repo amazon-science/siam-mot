@@ -28,13 +28,24 @@ Please refer to [INSTALL.md](readme/INSTALL.md) for installation instructions.
 
 
 ## Try SiamMOT demo
-We provide several pre-trained models in [model_zoos.md](readme/model_zoo.md) that can be used for demo. 
+For demo  purposes,  we provide two tracking models -- tracking person (visible part) or jointly tracking person and vehicles (bus, car, truck, motorcycle, etc).
+The person tracking model is trained on COCO-17 and CrowdHuman, while the latter model is trained on COCO-17 and VOC12.
+Currently, both models used in demos use EMM as its motion model, which performs best among different alternatives.
 
-Codes and instructions are coming soon....
+In order to run the demo, use the following command:
+~~~
+python3 demos/demo.py --demo-video  PATH_TO_DEMO_VIDE --track-class person --dump-video True
+~~~
+You can choose `person` or  `person_vehicel` for `track-class` such that person tracking or person/vehicle tracking model is used accordingly.
+
+The model would be automatically downloaded to `demos/models`,
+and the visualization of tracking outputs is automatically saved to `demos/demo_vis`
 
 ![](readme/demo_volleyball.gif)
 
 ![](readme/demo_person_vehicle.gif) 
+
+We also provide several pre-trained models in [model_zoos.md](readme/model_zoo.md) that can be used for demo. 
 
 ## Dataset Evaluation and Training
 After [installation](readme/INSTALL.md), follow the instructions in [DATA.md](readme/DATA.md) to setup the datasets.
