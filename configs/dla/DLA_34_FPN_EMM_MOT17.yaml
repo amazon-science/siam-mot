@@ -1,0 +1,53 @@
+INPUT:
+  MIN_SIZE_TRAIN: (640, 720, 800, 880, 960)
+  MAX_SIZE_TRAIN: 1500
+  MIN_SIZE_TEST: 800
+  MAX_SIZE_TEST: 1500
+  PIXEL_MEAN: [0.485, 0.456, 0.406]
+  PIXEL_STD: [0.229, 0.224, 0.225]
+  TO_BGR255: False
+  # This augmentation is intended for
+  # dataset with small motion
+  MOTION_LIMIT: 0.1
+  MOTION_BLUR_PROB: 1.0
+  COMPRESSION_LIMIT: 50
+  BRIGHTNESS: 0.1
+  CONTRAST: 0.1
+  SATURATION: 0.1
+  HUE: 0.1
+
+  # this is important for MOT17
+  AMODAL: True
+
+VIDEO:
+   TEMPORAL_WINDOW: 1000
+   TEMPORAL_SAMPLING: 1000
+   RANDOM_FRAMES_PER_CLIP: 2
+
+MODEL:
+
+  # The maximum number of frames that a track keeps dormant before it is killed
+  TRACK_HEAD:
+    MAX_DORMANT_FRAMES: 30
+
+SOLVER:
+  # Assume 8 GPUs
+  BASE_LR: 0.02
+  WEIGHT_DECAY: 0.0001
+  STEPS: (15000, 20000)
+  MAX_ITER: 25000
+  VIDEO_CLIPS_PER_BATCH: 16
+
+DATASETS:
+  # SET THIS PATH CORRECTLY
+  ROOT_DIR: ""
+  TRAIN: ( "crowdhuman_train_fbox", "crowdhuman_val_fbox")
+
+DATALOADER:
+  SIZE_DIVISIBILITY: 32
+  NUM_WORKERS: 4
+
+# Set this one to be false for private detection
+INFERENCE:
+    USE_GIVEN_DETECTIONS: True
+
