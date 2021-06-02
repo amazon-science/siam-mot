@@ -21,7 +21,16 @@ class CombinedROIHeads(torch.nn.ModuleDict):
     def forward(self, features, proposals, targets=None, track_memory=None, given_detection=None):
         losses = {}
 
-        x, detections, loss_box = self.box(features, proposals, targets)
+        if given_detection is None:
+            x, detections, loss_box = self.box(features, proposals, targets)
+        else:
+            # adjust provided detection
+            if len(given_detection[0]) > 0:
+                x, detections, loss_box = self.box(features, given_detection, targets)
+            else:
+                x = features
+                detections = given_detection
+                loss_box = {}
         losses.update(loss_box)
 
         if self.cfg.MODEL.TRACK_ON:

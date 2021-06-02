@@ -60,3 +60,21 @@ def load_dataset_anno(cfg, dataset_key, set=None):
 
     return dataset, dataset_info
 
+
+def load_public_detection(cfg, dataset_key):
+    dataset_folder, _, split_file, _ = dataset_maps[dataset_key]
+
+    dataset_folder = os.path.join(cfg.DATASETS.ROOT_DIR, dataset_folder)
+
+    try:
+        public_detection = load_motion_anno(dataset_folder,
+                                            'anno_pub_detection.json',
+                                            split_file)
+    except:
+        print("The public detection is not ingested or provided in {}, skip public detection".
+              format(os.path.join(dataset_folder, 'annotation/anno_pub_detection.json')))
+
+        return None
+
+    return public_detection
+

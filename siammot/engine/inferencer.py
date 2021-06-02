@@ -9,7 +9,7 @@ from gluoncv.torch.data.gluoncv_motion_dataset.dataset import DataSample
 
 from ..data.build_inference_data_loader import build_video_loader
 from ..data.adapters.augmentation.build_augmentation import build_siam_augmentation
-from ..utils.boxlists_to_entities import boxlists_to_entities
+from ..utils.boxlists_to_entities import boxlists_to_entities, convert_given_detections_to_boxlist
 from ..eval.eval_clears_mot import eval_clears_mot
 
 
@@ -40,11 +40,24 @@ def do_inference(cfg, model, sample: DataSample, transforms=None,
         timestamps = torch.squeeze(timestamps, dim=0).tolist()
         video_clip = torch.squeeze(video_clip, dim=0)
 
+        frame_detection = None
+        # used the public provided detection (e.g. MOT17, HiEve)
+        # the public detection needs to be ingested to DataSample
+        # the ingested detection has been provided, find the details in readme/DATA.md
+        if given_detection:
+            frame_detection = given_detection.get_entities_for_frame_num(frame_id)
+            frame_detection = convert_given_detections_to_boxlist(frame_detection,
+                                                                  sample.width,
+                                                                  sample.height)
+            frame_height, frame_width = video_clip.shape[-2:]
+            frame_detection = frame_detection.resize((frame_width, frame_height))
+            frame_detection = [frame_detection.to(gpu_device)]
+
         with torch.no_grad():
             video_clip = video_clip.to(gpu_device)
             torch.cuda.synchronize()
             network_start_time = time.time()
-            output_boxlists= model(video_clip)
+            output_boxlists= model(video_clip, given_detection=frame_detection)
             torch.cuda.synchronize()
             network_time += time.time() - network_start_time
 
@@ -63,7 +76,7 @@ def do_inference(cfg, model, sample: DataSample, transforms=None,
 
 class DatasetInference(object):
     def __init__(self, cfg, model, dataset, output_dir, data_filter_fn=None,
-                 distributed=False):
+                 public_detection=None, distributed=False):
 
         self._cfg = cfg
 
@@ -73,6 +86,7 @@ class DatasetInference(object):
         self._output_dir = output_dir
         self._distributed = distributed
         self._data_filter_fn = data_filter_fn
+        self._pub_detection = public_detection
         self._track_conf = 0.7
         self._track_len = 5
         self._logger = logging.getLogger(__name__)
@@ -107,8 +121,12 @@ class DatasetInference(object):
         if os.path.exists(cache_path):
             sample_result = DataSample.load(cache_path)
         else:
+            given_detection = None
+            if self._pub_detection:
+                given_detection = self._pub_detection[sample.id]
             sample_result = do_inference(self._cfg, self._model, sample,
                                          transforms=self._transform,
+                                         given_detection=given_detection
                                          )
             sample_result.dump(cache_path)
         return sample_result
