@@ -53,7 +53,7 @@ def test(cfg, args, output_dir):
     # Load testing dataset
     dataset_key = args.test_dataset
     dataset, modality = load_dataset_anno(cfg, dataset_key, args.set)
-    dataset = sorted(dataset)[:20]
+    dataset = sorted(dataset)
 
     # do inference on dataset
     data_filter_fn = build_data_filter_fn(dataset_key)
