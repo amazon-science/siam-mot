@@ -3,6 +3,8 @@ Implements the Generalized R-CNN for SiamMOT
 """
 from torch import nn
 
+import siammot.operator_patch.run_operator_patch
+
 from maskrcnn_benchmark.structures.image_list import to_image_list
 from maskrcnn_benchmark.modeling.rpn.rpn import build_rpn
 
