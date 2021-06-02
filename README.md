@@ -73,7 +73,11 @@ Multi-gpu testing is going to be supported later.
 This is the preliminary version specifically for [Airbone Object Tracking (AOT) workshop](https://www.aicrowd.com/challenges/airborne-object-tracking-challenge).
 The current version only support the motion model being EMM.
 
-We will add more motion models in the next version, together with more features, stay tuned.
+* [Update 06/02/2021] Refactor of configuration file
+* [Update 06/02/2021] Operator patching for amodal inference (needed in MOT17) and model release of MOT17 model
+* [Update 06/02/2021] Support inference based on provided public detection
+
+Stay tuned for more updates
 
 ## License
 
