@@ -3,9 +3,9 @@ from collections import OrderedDict
 
 from maskrcnn_benchmark.modeling import registry
 from maskrcnn_benchmark.modeling.make_layers import conv_with_kaiming_uniform
+import maskrcnn_benchmark.modeling.backbone.fpn as fpn_module
 
 from .dla import dla
-from . import fpn as fpn_module
 
 
 @registry.BACKBONES.register("DLA-34-FPN")

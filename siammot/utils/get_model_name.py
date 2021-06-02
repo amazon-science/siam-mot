@@ -35,7 +35,7 @@ def _get_branch_suffix(cfg):
     if cfg.MODEL.BOX_ON:
         suffix += '_box'
     if cfg.MODEL.TRACK_ON:
-        suffix += '_track'
+        suffix += ('_'+cfg.MODEL.TRACK_HEAD.MODEL)
     return suffix
 
 

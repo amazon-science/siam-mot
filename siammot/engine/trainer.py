@@ -20,9 +20,9 @@ def do_train(
         device,
         checkpoint_period,
         arguments,
+        logger,
         tensorboard_writer: TensorboardWriter = None
 ):
-    logger = logging.getLogger(__name__)
     logger.info("Start training")
     meters = MetricLogger(delimiter="  ")
     max_iter = len(data_loader)

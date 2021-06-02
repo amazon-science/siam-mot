@@ -8,6 +8,7 @@ split file name (video dataset) / path of image folder (image dataset) ,
 modality
 )
 """
+
 dataset_maps['TAO'] = ['TAO',
                        'anno_person.json',
                        'splits_person.json',
@@ -47,3 +48,13 @@ dataset_maps['crowdhuman_train_vbox'] = ['CrowdHuman',
                                          'annotations/annotation_train_vbox.json',
                                          'Images',
                                          'image']
+
+dataset_maps['crowdhuman_val_fbox'] = ['CrowdHuman',
+                                       'annotations/annotation_val_fbox.json',
+                                       'Images',
+                                       'image']
+
+dataset_maps['crowdhuman_val_vbox'] = ['CrowdHuman',
+                                       'annotations/annotation_val_vbox.json',
+                                       'Images',
+                                       'image']

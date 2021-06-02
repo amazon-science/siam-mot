@@ -32,7 +32,7 @@ parser.add_argument("--model-suffix", default="", help="model suffix to differen
 parser.add_argument("--local_rank", type=int, default=0)
 
 
-def train(cfg, train_dir, local_rank, distributed):
+def train(cfg, train_dir, local_rank, distributed, logger):
 
     # build model
     model = build_siammot(cfg)
@@ -75,7 +75,7 @@ def train(cfg, train_dir, local_rank, distributed):
 
     do_train(model, data_loader, optimizer, scheduler,
              checkpointer, device, checkpoint_period, arguments,
-             tensorboard_writer
+             logger, tensorboard_writer
              )
 
     return model
@@ -112,7 +112,7 @@ def setup_env_and_logger(args, cfg):
     logger.info("Saving config into: {}".format(output_config_path))
     save_config(cfg, output_config_path)
 
-    return train_dir
+    return train_dir, logger
 
 
 def main():
@@ -121,9 +121,9 @@ def main():
     cfg.merge_from_file(args.config_file)
     cfg.freeze()
 
-    train_dir = setup_env_and_logger(args, cfg)
+    train_dir, logger = setup_env_and_logger(args, cfg)
 
-    train(cfg, train_dir, args.local_rank, args.distributed)
+    train(cfg, train_dir, args.local_rank, args.distributed, logger)
 
 
 if __name__ == "__main__":

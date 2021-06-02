@@ -108,9 +108,12 @@ class ImageCropResize(object):
         br_y = int((h / w) * (br_x - tl_x) + tl_y)
 
         if len(target) > 0:
-            box = target.bbox
-            box_w = box[:, 2] - box[:, 0]
-            box_h = box[:, 3] - box[:, 1]
+            box = target.bbox.clone()
+            # get the visible part of the objects
+            box_w = box[:, 2].clamp(min=0, max=target.size[0] - 1) - \
+                    box[:, 0].clamp(min=0, max=target.size[0] - 1)
+            box_h = box[:, 3].clamp(min=0, max=target.size[1] - 1) - \
+                    box[:, 1].clamp(min=0, max=target.size[1] - 1)
             box_area = box_h * box_w
             max_area_idx = torch.argmax(box_area, dim=0)
             max_motion_limit_w = int(box_w[max_area_idx] * 0.25)

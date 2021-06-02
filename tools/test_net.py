@@ -7,15 +7,13 @@ import os
 import torch
 
 from maskrcnn_benchmark.utils.checkpoint import DetectronCheckpointer
-from maskrcnn_benchmark.utils.comm import get_rank
-from maskrcnn_benchmark.utils.logger import setup_logger
 from maskrcnn_benchmark.utils.miscellaneous import mkdir
 
 from siammot.configs.defaults import cfg
 from siammot.modelling.rcnn import build_siammot
 from siammot.engine.inferencer import DatasetInference
 from siammot.utils.get_model_name import get_model_name
-from siammot.data.adapters.utils.data_utils import load_dataset_anno
+from siammot.data.adapters.utils.data_utils import load_dataset_anno, load_public_detection
 from siammot.data.adapters.handler.data_filtering import build_data_filter_fn
 
 try:
@@ -33,7 +31,7 @@ parser.add_argument("--gpu-id", default=0, type=int)
 parser.add_argument("--num-gpus", default=1, type=int)
 
 
-def test(cfg, args, output_dir, logger):
+def test(cfg, args, output_dir):
 
     torch.cuda.empty_cache()
 
@@ -44,7 +42,7 @@ def test(cfg, args, output_dir, logger):
 
     # Load model params
     model_file = args.model_file
-    checkpointer = DetectronCheckpointer(cfg, model, save_dir=model_file, logger=logger)
+    checkpointer = DetectronCheckpointer(cfg, model, save_dir=model_file)
     if os.path.isfile(model_file):
         _ = checkpointer.load(model_file)
     elif os.path.isdir(model_file):
@@ -55,11 +53,17 @@ def test(cfg, args, output_dir, logger):
     # Load testing dataset
     dataset_key = args.test_dataset
     dataset, modality = load_dataset_anno(cfg, dataset_key, args.set)
-    dataset = sorted(dataset)
+    dataset = sorted(dataset)[:20]
 
     # do inference on dataset
     data_filter_fn = build_data_filter_fn(dataset_key)
-    dataset_inference = DatasetInference(cfg, model, dataset, output_dir, data_filter_fn)
+
+    # load public detection
+    public_detection = None
+    if cfg.INFERENCE.USE_GIVEN_DETECTIONS:
+        public_detection = load_public_detection(cfg, dataset_key)
+
+    dataset_inference = DatasetInference(cfg, model, dataset, output_dir, data_filter_fn, public_detection)
     dataset_inference()
 
 
@@ -73,10 +77,7 @@ def main():
     if not os.path.exists(output_dir):
         mkdir(output_dir)
 
-    logger = setup_logger("siammot", output_dir, get_rank())
-    logger.info(args)
-
-    test(cfg, args, output_dir, logger)
+    test(cfg, args, output_dir)
 
 
 if __name__ == "__main__":
