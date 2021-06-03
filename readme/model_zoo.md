@@ -9,7 +9,7 @@ You can find the details of the challenge in the [offical homepage](https://www.
 Top methods will share the cash prize pool of $50,000.
 
 The baseline results in the [AOT leaderboard](https://www.aicrowd.com/challenges/airborne-object-tracking-challenge/leaderboards) are provided with this model: 
-[SiamMOT-DLA34-EMM](https://aws-cv-sci-motion-public.s3-us-west-2.amazonaws.com/SiamMOT/model_zoos/DLA-34-FPN_box_track_aot_d4.pth)
+[SiamMOT-DLA34-EMM](https://aws-cv-sci-motion-public.s3-us-west-2.amazonaws.com/SiamMOT/model_zoos/DLA-34-FPN_EMM_AOT.pth)
 
 ## MOTChallenge-2017 Test (Public detection)
 In order to run the model with the public detection, you need to 
@@ -24,21 +24,19 @@ After extraction, they should be placed under `dataset_root/annotation` folder.
 
 |     Model    |        Training data       | MOTA  |  IDF1  |
 |--------------|----------------------------|-------|--------|
-|[SiamMOT-DLA34-EMM](https://aws-cv-sci-motion-public.s3-us-west-2.amazonaws.com/SiamMOT/model_zoos/DLA-34-FPN_box_EMM_crowdhuman.pth) | CrowdHuman         | 65.01 | 61.86
-|SiamMOT-DLA34-EMM | CrowdHuman + MOT17 |   -   |   -
+|[SiamMOT-DLA34-EMM](https://aws-cv-sci-motion-public.s3-us-west-2.amazonaws.com/SiamMOT/model_zoos/DLA-34-FPN_EMM_crowdhuman.pth) | CrowdHuman         | 65.01 | 61.86
+|[SiamMOT-DLA34-EMM](https://aws-cv-sci-motion-public.s3-us-west-2.amazonaws.com/SiamMOT/model_zoos/DLA-34-FPN_EMM_crowdhuman_mot17.pth) | CrowdHuman + MOT17 | 66.09 | 63.49
 |SiamMOT-DLA34-IMM | CrowdHuman         |   -   |   - 
 |SiamMOT-DLA34-IMM | CrowdHuman + MOT17 |   -   |   - 
 
 
 ## TAO-Person
-Models and results are to be released soon
+Use the default [configuration file](configs/dla/DLA_34_FPN_EMM.yaml) to generate the following results.
 
 |         Model        |    Training data   | TAP@0.5  |  TAP@0.75 |
 |----------------------|--------------------|----------|-----------|
-|SiamMOT-DLA34-EMM | CrowdHuman + COCO17|     -    |     -
+|[SiamMOT-DLA34-EMM](https://aws-cv-sci-motion-public.s3-us-west-2.amazonaws.com/SiamMOT/model_zoos/DLA-34-FPN_EMM_coco_crowdhuman.pth) | CrowdHuman + COCO17|   37.98  |     19.99
 |SiamMOT-DLA169-EMM| CrowdHuman + COCO17|     -    |     -
-|SiamMOT-DLA34-EMM | CrowdHuman + COCO17|     -    |     - 
-|SiamMOT-DLA169-EMM| CrowdHuman + COCO17|     -    |     - 
 
 
 ## Pre-trained Faster-RCNN on COCO-2017
