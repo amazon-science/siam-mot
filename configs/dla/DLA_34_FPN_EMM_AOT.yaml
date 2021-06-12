@@ -73,8 +73,8 @@ SOLVER:
 DATASETS:
   # SET THIS PATH CORRECTLY
   ROOT_DIR: ""
-  TRAIN: ("prime_air", )
-  TEST: ("prime_air", )
+  TRAIN: ("AOT", )
+  TEST: ("AOT", )
 
 DATALOADER:
   SIZE_DIVISIBILITY: 32

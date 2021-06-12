@@ -31,7 +31,7 @@ After extraction, they should be placed under `dataset_root/annotation` folder.
 
 
 ## TAO-Person
-Use the default [configuration file](configs/dla/DLA_34_FPN_EMM.yaml) to generate the following results.
+Use the default [configuration file](../configs/dla/DLA_34_FPN_EMM.yaml) to generate the following results.
 
 |         Model        |    Training data   | TAP@0.5  |  TAP@0.75 |
 |----------------------|--------------------|----------|-----------|
