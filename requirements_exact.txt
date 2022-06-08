@@ -1,4 +1,4 @@
-numpy==1.20.1
+numpy==1.21.0
 gluoncv==0.10.0
 motmetrics==1.2.0
 timm==0.4.5
