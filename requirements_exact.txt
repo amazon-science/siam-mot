@@ -12,5 +12,5 @@ pycocotools==2.0.2
 scikit_learn==0.24.2
 indexed==1.2.0
 fire==0.4.0
-mxnet==1.8.0.post0
+mxnet==1.9.1
 tensorboard==2.5.0
