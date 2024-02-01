@@ -9,7 +9,7 @@ imgaug==0.4.0
 yacs==0.1.8
 Pillow==10.0.1
 pycocotools==2.0.2
-scikit_learn==0.24.2
+scikit_learn==1.0.1
 indexed==1.2.0
 fire==0.4.0
 mxnet==1.9.1
